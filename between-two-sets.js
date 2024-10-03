@@ -30,58 +30,45 @@ function readLine() {
  *  1. INTEGER_ARRAY a
  *  2. INTEGER_ARRAY b
  */
-function getMultiplos(a,b)
+function getMdc(n1,n2)
 {
-    var multiplos = [];
-    var i = 1;
-    
-    //percorre a
-    for(var i = 0; i < a.length; ++i)
-    {
-        const subMult = [];
-        subMult[0] = a[i];
-        var j = 0;
-        var k = 2;
-        do{
-            ++j;
-            subMult[j] = a[i] * k;
-            ++k;
-        }while(subMult[j] < b[b.length - 1]);
+    if(n2 ==0)
+        return n1;
 
-        multiplos.push(subMult);
-            
-    }
-    return multiplos;
+    return getMdc(n2,n1%n2);
 }
 
-function getFatores(b){
-    var fatores = [];
-
-    for(var i = 0; i < b.length; b++)
-    {
-        var subFactor = [];
-        for(var j = 2; j < b[i]/2; j++)
-            if(b[i] % j == 0)
-                subFactor.push[j];
-
-        fatores.push(subFactor);
-    }
-    console.log(fatores);
-    return fatores;
+function getMmc(n1,n2){
+    if(n1 === 0 || n2 === 0)
+        return 0;
+    
+    return Math.abs(n1 * n2) / getMdc(n1, n2);
 }
 
 function getTotalX(a, b) {
     // Write your code here
 
-    //array de multiplos:
-    var multiplos = [];
-    multiplos = getMultiplos(a,b);
+    //mmc do vetor a
+    var mmc = a[0];
+    for(var i = 0; i < a.length; ++i)
+        mmc = getMmc(mmc,a[i]);
 
-    var fatores = [];
-    fatores = getFatores(b);
+    //mdc do vetor b
+    var mdc = b[0];
+    for(var i = 0; i < b.length; ++i)
+        mdc = getMdc(mdc,b[i]);
 
-    //console.log(multiplos);
-    //console.log(b[b.length - 1]);
+    var multiplo = 0;
+    var result = 0;
+
+    while(multiplo <= mdc){
+        multiplo += mmc;
+
+        if(mdc % multiplo == 0)
+                ++result;
+    }
+
+    return result;
 
 }
 
